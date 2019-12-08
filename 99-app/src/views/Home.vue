@@ -61,8 +61,15 @@ export default {
         const res = await AsmaUlHusna.list()
         this.list = res.data
         this.error = false
+        window.localStorage.setItem('99list_key', Date.now())
+        window.localStorage.setItem('99list_val', JSON.stringify(res.data))
       } catch (error) {
-        this.error = true
+        const key = window.localStorage.getItem('99list_key') || 0
+        if (Date.now() - key < 60000) {
+          this.list = JSON.parse(window.localStorage.getItem('99list_val'))
+        } else {
+          this.error = true
+        }
       }
       this.loading = false
     },

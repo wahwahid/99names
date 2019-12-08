@@ -114,12 +114,20 @@ export default {
         this.error = true
         this.loading = false
       } else {
+        const id = this.$route.params.id
         this.loading = true
         try {
-          const res = await AsmaUlHusna.detail(this.$route.params.id)
+          const res = await AsmaUlHusna.detail(id)
           this.detail = res.data
+          window.localStorage.setItem(`99detail_${id}_key`, Date.now())
+          window.localStorage.setItem(`99detail_${id}_val`, JSON.stringify(res.data))
         } catch (error) {
-          this.error = true
+          const key = window.localStorage.getItem(`99detail_${id}_key`) || 0
+          if (Date.now() - key < 60000) {
+            this.detail = JSON.parse(window.localStorage.getItem(`99detail_${id}_val`))
+          } else {
+            this.error = true
+          }
         }
         this.loading = false
       }
