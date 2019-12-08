@@ -8,6 +8,6 @@ module.exports = {
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'default',
-    assetsVersion: '1'   
+    assetsVersion: '2'   
   }
 }
