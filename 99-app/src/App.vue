@@ -114,6 +114,9 @@ export default {
     }
   },
   mounted () {
+    setTimeout(() => {
+      this.connect = !window.navigator.onLine
+    }, 2000)
     window.addEventListener('online', () => {
       this.uiNetworkStatus()
     }, false)
