@@ -8,10 +8,10 @@
       <span v-if="$route.name === 'home'" style="width: 36px">
         <v-icon>mdi-home</v-icon>
       </span>
-      <v-btn icon v-else @click="goBack">
+      <v-btn icon v-else @click="goHome">
         <v-icon>mdi-home</v-icon>
       </v-btn>
-      <v-toolbar-title class="pl-1">99 Asmaul Husna</v-toolbar-title>
+      <v-toolbar-title class="pl-1">99 Asma Ul Husna</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
@@ -28,7 +28,9 @@ export default {
   }),
   methods: {
     goBack() {
-      // window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    },
+    goHome() {
       this.$router.push('/')
     }
   }

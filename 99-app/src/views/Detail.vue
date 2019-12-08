@@ -30,7 +30,15 @@
       </template>
       <template  v-else>
         <template  v-if="error">
-          <v-flex xs12>
+          <v-flex xs12 class="text-center" style="margin-top: 150px;">
+            <v-icon size="100">mdi-alert</v-icon>
+            <h1 class="display-1">Astaghfirullah !</h1>
+            <p>Tidak dapat menerima data dari penyedia. Periksa koneksi internet anda, kemudian coba lagi. </p>
+            <br>
+            <v-btn depressed @click="goBack">
+              <v-icon>mdi-arrow-left</v-icon>
+              <span class="pl-2">Go Back</span>
+            </v-btn>
           </v-flex>
         </template>
         <template  v-else>
@@ -126,6 +134,9 @@ export default {
     },
     next () {
       this.$router.push('/detail/' + (this.detail.id + 1))
+    },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
     }
   },
   mounted () {

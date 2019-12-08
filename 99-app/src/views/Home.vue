@@ -11,19 +11,32 @@
         </v-flex>
       </template>
       <template  v-else>
-        <v-flex v-for="item in list" :key="item.id" xs12 sm6 md4 class="pa-2">
-          <router-link class="clean" :to="'/detail/' + item.id">
-            <v-card ripple>
-              <v-list-item>
-                <v-list-item-avatar :color="'white--text ' + getColor(item.id)">{{ item.id }}</v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title class="headline">{{ item.arab }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ item.latin }}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-card>
-          </router-link>
-        </v-flex>
+        <template  v-if="error">
+          <v-flex xs12 class="text-center" style="margin-top: 150px;">
+            <v-icon size="100">mdi-alert</v-icon>
+            <h1 class="display-1">Astaghfirullah !</h1>
+            <p>Tidak dapat menerima data dari penyedia. Periksa koneksi internet anda, kemudian coba lagi. </p>
+            <v-btn depressed @click="reload">
+              <v-icon>mdi-refresh</v-icon>
+              <span class="pl-2">Muat Ulang</span>
+            </v-btn>
+          </v-flex>
+        </template>
+        <template  v-else>
+          <v-flex v-for="item in list" :key="item.id" xs12 sm6 md4 class="pa-2">
+            <router-link class="clean" :to="'/detail/' + item.id">
+              <v-card ripple>
+                <v-list-item>
+                  <v-list-item-avatar :color="'white--text ' + getColor(item.id)">{{ item.id }}</v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title class="headline">{{ item.arab }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ item.latin }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card>
+            </router-link>
+          </v-flex>
+        </template>
       </template>
     </v-layout>
   </v-container>
@@ -47,6 +60,7 @@ export default {
       try {
         const res = await AsmaUlHusna.list()
         this.list = res.data
+        this.error = false
       } catch (error) {
         this.error = true
       }
@@ -56,6 +70,9 @@ export default {
       return this.bgcolors[id % this.bgcolors.length].replace(/[\w]([A-Z])/g, function(m) {
         return m[0] + "-" + m[1];
       }).toLowerCase() + ' darken-3'
+    },
+    reload () {
+      this.loadData()
     }
   },
   mounted () {

@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const HTTP = Axios.create({
-    baseURL: 'http://localhost:9999/'
+    baseURL: 'https://99-api.now.sh/'
 })
 
 export { HTTP }
