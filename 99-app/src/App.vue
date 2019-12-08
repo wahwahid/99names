@@ -63,6 +63,25 @@
     <v-content>
       <router-view :key="$route.fullPath"></router-view>
     </v-content>
+
+    <v-snackbar
+      v-model="connect"
+      :color="connStat ? 'success' : 'error'"
+      bottom
+      right
+      :timeout="connStat ? 5000 : 0"
+    >
+      <v-icon>mdi-{{ connStat ? 'wifi' : 'wifi-off' }}</v-icon>
+      <span class="pl-3">{{ connStat ? ' Alhamdulillah Internet Tersambung' : ' Astaghfirullah Internet Terputus' }}</span>
+      <v-btn
+        dark
+        depressed
+        @click="connect = false"
+        :color="connStat ? 'success' : 'error'"
+      >
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -70,7 +89,9 @@
 export default {
   name: 'App',
   data: () => ({
-    about: false
+    about: false,
+    connect: false,
+    connStat: null
   }),
   methods: {
     goBack() {
@@ -78,7 +99,27 @@ export default {
     },
     goHome() {
       this.$router.push('/')
+    },
+    uiNetworkStatus (val = true) {
+      if (val) {
+        this.connStat = val
+        this.connect = true
+        setTimeout(() => {
+          this.connect = false
+        }, 5000)
+      } else {
+        this.connStat = val
+        this.connect = true
+      }
     }
+  },
+  mounted () {
+    window.addEventListener('online', () => {
+      this.uiNetworkStatus()
+    }, false)
+    window.addEventListener('offline', () => {
+      this.uiNetworkStatus(false)
+    }, false)
   }
 };
 </script>
