@@ -5,9 +5,12 @@ module.exports = {
   pwa: {
     name: '99 Asma Ul Husna',
     themeColor: '#1976d2',
-    msTileColor: '#000000',
+    msTileColor: '#ffffff',
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'default',
-    assetsVersion: '2'   
+    assetsVersion: '3',
+    manifestOptions: {
+      "background_color": "#ffffff"
+    }
   }
 }
