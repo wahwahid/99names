@@ -38,6 +38,10 @@
           <v-flex xs12 sm3 md4>
           </v-flex>
           <template v-if="filteredList.length > 0">
+            <v-flex xs12 class="text-center pb-2">
+              Menampilkan {{ filteredList.length }} Asma Ul Husna
+              <span v-if="search !== ''">dengan kata kunci "{{ search }}"</span>
+            </v-flex>
             <v-flex v-for="item in filteredList" :key="item.id" xs12 sm6 md4 class="pa-2">
               <router-link class="clean" :to="'/detail/' + item.id">
                 <v-card ripple>
