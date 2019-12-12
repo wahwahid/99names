@@ -1,6 +1,34 @@
 <template>
   <v-container>
     <v-layout wrap>
+      <v-flex xs12 sm3 md4>
+      </v-flex>
+      <v-flex xs12 sm6 md4>
+        <v-text-field
+          class="pa-2"
+          v-model="search"
+          hide-details
+          prepend-inner-icon="mdi-magnify"
+          solo
+          rounded
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs12 sm3 md4>
+      </v-flex>
+      <v-flex xs12 class="text-center pb-2">
+        <div v-if="loading">
+          Memuat...
+        </div>
+        <div v-else>
+          <div v-if="error">
+            Tidak ada data yang dapat ditampilkan.
+          </div>
+          <div v-else>
+            Menampilkan {{ filteredList.length }} data
+            <span v-if="search !== ''">dengan kata kunci "{{ search }}"</span>
+          </div>
+        </div>
+      </v-flex>
       <template  v-if="loading">
         <v-flex v-for="i in 4" :key="i" xs12 sm6 md4 class="pa-2">
           <v-skeleton-loader
@@ -23,25 +51,7 @@
           </v-flex>
         </template>
         <template  v-else>
-          <v-flex xs12 sm3 md4>
-          </v-flex>
-          <v-flex xs12 sm6 md4>
-            <v-text-field
-              class="pa-2"
-              v-model="search"
-              hide-details
-              prepend-inner-icon="mdi-magnify"
-              solo
-              rounded
-            ></v-text-field>
-          </v-flex>
-          <v-flex xs12 sm3 md4>
-          </v-flex>
           <template v-if="filteredList.length > 0">
-            <v-flex xs12 class="text-center pb-2">
-              Menampilkan {{ filteredList.length }} Asma Ul Husna
-              <span v-if="search !== ''">dengan kata kunci "{{ search }}"</span>
-            </v-flex>
             <v-flex v-for="item in filteredList" :key="item.id" xs12 sm6 md4 class="pa-2">
               <router-link class="clean" :to="'/detail/' + item.id">
                 <v-card ripple>
