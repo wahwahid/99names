@@ -23,19 +23,41 @@
           </v-flex>
         </template>
         <template  v-else>
-          <v-flex v-for="item in list" :key="item.id" xs12 sm6 md4 class="pa-2">
-            <router-link class="clean" :to="'/detail/' + item.id">
-              <v-card ripple>
-                <v-list-item>
-                  <v-list-item-avatar :color="'white--text ' + getColor(item.id)">{{ item.id }}</v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title class="headline">{{ item.arab }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ item.latin }}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-card>
-            </router-link>
+          <v-flex xs12 sm3 md4>
           </v-flex>
+          <v-flex xs12 sm6 md4>
+            <v-text-field
+              class="pa-2"
+              v-model="search"
+              hide-details
+              prepend-inner-icon="mdi-magnify"
+              solo
+              rounded
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm3 md4>
+          </v-flex>
+          <template v-if="filteredList.length > 0">
+            <v-flex v-for="item in filteredList" :key="item.id" xs12 sm6 md4 class="pa-2">
+              <router-link class="clean" :to="'/detail/' + item.id">
+                <v-card ripple>
+                  <v-list-item>
+                    <v-list-item-avatar :color="'white--text ' + getColor(item.id)">{{ item.id }}</v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title class="headline">{{ item.arab }}</v-list-item-title>
+                      <v-list-item-subtitle>{{ item.latin }}</v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-card>
+              </router-link>
+            </v-flex>
+          </template>
+          <template v-else>
+            <v-flex xs12 class="text-center" style="margin-top: 150px;">
+              <h1 class="display-1">Tidak ditemukan !</h1>
+              <p>Tidak ada Asma Ul Husna yang cocok dengan kata kunci "{{ search }}". </p>
+            </v-flex>
+          </template>
         </template>
       </template>
     </v-layout>
@@ -52,8 +74,14 @@ export default {
     bgcolors: [],
     loading: true,
     error: false,
-    list: []
+    list: [],
+    search: ''
   }),
+  computed: {
+    filteredList () {
+      return this.list.filter(v => v.latin.toLowerCase().indexOf(this.search.toLowerCase()) >= 0)
+    }
+  },
   methods: {
     async loadData () {
       this.loading = true
