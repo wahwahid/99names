@@ -123,7 +123,7 @@ export default {
           window.localStorage.setItem(`99detail_${id}_val`, JSON.stringify(res.data))
         } catch (error) {
           const key = window.localStorage.getItem(`99detail_${id}_key`) || 0
-          if (Date.now() - key < 60000) {
+          if (Date.now() - key < 30*24*60*60*1000) {
             this.detail = JSON.parse(window.localStorage.getItem(`99detail_${id}_val`))
           } else {
             this.error = true
@@ -152,9 +152,7 @@ export default {
       this.bgcolors.push(color)
     }
     this.bgcolors.pop()
-    setTimeout(() => {
-      this.loadData()
-    }, 500)
+    this.loadData()
   }
 }
 </script>

@@ -39,9 +39,9 @@
               <ul>
                   <li>wahwahid</li>
                   <li>andrisiswanto</li>
-                  <li>kdzikry</li>
-                  <li>lukmansurya</li>
                   <li>andrianto69</li>
+                  <li>lukmansuryalaksana</li>
+                  <li>kdzikry</li>
               </ul>
             </p>
           </v-card-text>

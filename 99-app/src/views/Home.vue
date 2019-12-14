@@ -107,7 +107,7 @@ export default {
         window.localStorage.setItem('99list_val', JSON.stringify(res.data))
       } catch (error) {
         const key = window.localStorage.getItem('99list_key') || 0
-        if (Date.now() - key < 60000) {
+        if (Date.now() - key < 30*24*60*60*1000) {
           this.list = JSON.parse(window.localStorage.getItem('99list_val'))
         } else {
           this.error = true
@@ -129,9 +129,7 @@ export default {
       this.bgcolors.push(color)
     }
     this.bgcolors.pop()
-    setTimeout(() => {
-      this.loadData()
-    }, 1000)
+    this.loadData()
   }
 }
 </script>
